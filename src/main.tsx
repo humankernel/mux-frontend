@@ -1,22 +1,30 @@
-import React from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import './globals.css'
-import DotPattern from './components/ui/dot-pattern.tsx'
-import { cn } from './lib/utils.ts'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        {/* <DotPattern
-            width={20}
-            height={20}
-            cx={1}
-            cy={1}
-            cr={1}
-            className={cn(
-                "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] ",
-            )}
-        /> */}
-        <App />
-    </React.StrictMode>,
-)
+// Import the generated route tree
+import { routeTree } from './routeTree.gen'
+
+// Create a new router instance
+const router = createRouter({ routeTree })
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+    interface Register { router: typeof router }
+}
+
+// Render the app
+const rootElement = document.getElementById('app')!
+if (!rootElement.innerHTML) {
+    const root = ReactDOM.createRoot(rootElement)
+    root.render(
+        <StrictMode>
+            <TooltipProvider>
+                <RouterProvider router={router} />
+            </TooltipProvider>
+        </StrictMode>,
+    )
+}
+
