@@ -10,7 +10,7 @@ function RootLayout() {
     const pathname = useLocation({ select: (location) => location.pathname })
     const isSidebarCollapsed = useStore(s => s.isSidebarCollapsed)
 
-    return <div className='flex '>
+    return <div className='flex dark'>
         {
             pathname.includes("/dashboard")
                 ? <DashboardSideBar />

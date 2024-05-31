@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { BookIcon, CopyIcon, FilmIcon, MusicIcon, ScanEyeIcon, TvIcon } from 'lucide-react'
+import { BookIcon, CopyIcon, FilmIcon, FolderIcon, MusicIcon, ScanEyeIcon, ScanIcon, TvIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { ColumnDef } from "@tanstack/react-table"
@@ -11,8 +11,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DataTableColumnHeader } from '@/components/table/column-header'
@@ -49,6 +47,11 @@ function LibrariesPage() {
                 <BookIcon className='mr-2 w-4 h-4' />
                 Books
             </Button>
+        </div>
+
+        <div className="w-fit border p-2 inline-flex gap-2 rounded-xl mb-4" role="group">
+            <Button size="sm" variant="outline"> <FolderIcon className='mr-2 w-4 h-4' /> Add Folder </Button>
+            <Button size="sm" variant="outline"> <ScanIcon className='mr-2 w-4 h-4' /> Scan </Button>
         </div>
 
         <DataTable columns={columns} data={medias} />
