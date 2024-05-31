@@ -3,7 +3,6 @@ import {
   ClapperboardIcon,
   FileClockIcon,
   FolderTreeIcon,
-  GaugeIcon,
   ImageDownIcon,
   LucideIcon,
   MusicIcon,
@@ -25,12 +24,11 @@ export const LINKS: LinkType[] = [
 ];
 
 export const DASHBOARD_SETTINGS_LINKS: LinkType[] = [
-  { name: "Dashboard", url: "", icon: GaugeIcon },
   { name: "General", url: "settings", icon: SettingsIcon },
   { name: "Agents", url: "agents", icon: ImageDownIcon },
 ];
 
 export const DASHBOARD_MANAGE_LINKS: LinkType[] = [
-  { name: "Libraries", url: "library", icon: FolderTreeIcon },
+  { name: "Libraries", url: "libraries", icon: FolderTreeIcon },
   { name: "Logs", url: "logs", icon: FileClockIcon },
 ];

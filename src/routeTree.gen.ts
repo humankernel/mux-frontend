@@ -13,7 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DashboardImport } from './routes/dashboard'
+import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create Virtual Routes
 
@@ -22,6 +22,10 @@ const MusicLazyImport = createFileRoute('/music')()
 const MoviesLazyImport = createFileRoute('/movies')()
 const BooksLazyImport = createFileRoute('/books')()
 const IndexLazyImport = createFileRoute('/')()
+const SettingsIndexLazyImport = createFileRoute('/settings/')()
+const ProfileIndexLazyImport = createFileRoute('/profile/')()
+const DashboardIndexLazyImport = createFileRoute('/dashboard/')()
+const DashboardLibrariesLazyImport = createFileRoute('/dashboard/libraries')()
 
 // Create/Update Routes
 
@@ -45,15 +49,41 @@ const BooksLazyRoute = BooksLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/books.lazy').then((d) => d.Route))
 
-const DashboardRoute = DashboardImport.update({
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const SettingsIndexLazyRoute = SettingsIndexLazyImport.update({
+  path: '/settings/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/settings/index.lazy').then((d) => d.Route),
+)
+
+const ProfileIndexLazyRoute = ProfileIndexLazyImport.update({
+  path: '/profile/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/profile/index.lazy').then((d) => d.Route))
+
+const DashboardIndexLazyRoute = DashboardIndexLazyImport.update({
+  path: '/dashboard/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/index.lazy').then((d) => d.Route),
+)
+
+const DashboardLibrariesLazyRoute = DashboardLibrariesLazyImport.update({
+  path: '/dashboard/libraries',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/libraries.lazy').then((d) => d.Route),
+)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  path: '/auth/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -64,13 +94,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
     '/books': {
@@ -101,6 +124,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShowsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/libraries': {
+      id: '/dashboard/libraries'
+      path: '/dashboard/libraries'
+      fullPath: '/dashboard/libraries'
+      preLoaderRoute: typeof DashboardLibrariesLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -108,11 +166,15 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  DashboardRoute,
   BooksLazyRoute,
   MoviesLazyRoute,
   MusicLazyRoute,
   ShowsLazyRoute,
+  AuthLoginRoute,
+  DashboardLibrariesLazyRoute,
+  DashboardIndexLazyRoute,
+  ProfileIndexLazyRoute,
+  SettingsIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -124,18 +186,19 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard",
         "/books",
         "/movies",
         "/music",
-        "/shows"
+        "/shows",
+        "/auth/login",
+        "/dashboard/libraries",
+        "/dashboard/",
+        "/profile/",
+        "/settings/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
-    },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
     },
     "/books": {
       "filePath": "books.lazy.tsx"
@@ -148,6 +211,21 @@ export const routeTree = rootRoute.addChildren({
     },
     "/shows": {
       "filePath": "shows.lazy.tsx"
+    },
+    "/auth/login": {
+      "filePath": "auth/login.tsx"
+    },
+    "/dashboard/libraries": {
+      "filePath": "dashboard/libraries.lazy.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.lazy.tsx"
+    },
+    "/profile/": {
+      "filePath": "profile/index.lazy.tsx"
+    },
+    "/settings/": {
+      "filePath": "settings/index.lazy.tsx"
     }
   }
 }

@@ -2,7 +2,7 @@ import {
     BookIcon,
     ClapperboardIcon,
     MusicIcon,
-    SearchIcon,
+    TelescopeIcon,
     TvIcon,
 } from "lucide-react";
 import {
@@ -58,15 +58,16 @@ export function SearchBar() {
                 size="sm"
                 variant="outline"
                 className="flex w-full justify-between gap-2 px-2"
+                onClick={() => setOpen(open => !open)}
             >
-                <span className="flex items-center gap-2 opacity-80">
-                    <SearchIcon size={15} />
+                <span className="inline-flex items-center opacity-80">
+                    <TelescopeIcon className="mr-2 h-4 w-4" />
                     Quick Search
                 </span>
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     /
                 </kbd>
-            </Button>
+            </Button >
             <p className="text-sm text-muted-foreground"></p>
             <CommandDialog open={open} onOpenChange={setOpen}>
                 <CommandInput
